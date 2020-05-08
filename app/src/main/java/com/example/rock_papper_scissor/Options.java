@@ -1,5 +1,6 @@
 package com.example.rock_papper_scissor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -80,63 +81,7 @@ public class Options extends AppCompatActivity {
 
                 button_clicked[0] += 1;
                 selected_opt = b1.getId();
-                if(game_mode == 2) {
-                    if(button_clicked[0]/2 == rounds)
-                    {
-                        final_winner(w1,w2);
-                    }
-                    options.add(selected_opt);
-                    if (button_clicked[0] % 2 != 0) {
-                        pl.setText(String.valueOf(2));
-                    } else {
-                        pl.setText(String.valueOf(1));
-                        winner_set.add(winner(options.get(0), options.get(1)));
-                        w1 = Collections.frequency(winner_set, 1);
-                        w2 = Collections.frequency(winner_set, 2);
-                        p1_s.setText(String.valueOf(w1));
-                        p2_s.setText(String.valueOf(w2));
-                        options.clear();
-                    }
-                }
-
-                else if(game_mode == 1) {
-                    if(button_clicked[0] == rounds)
-                        final_winner(w1,w2);
-                    pl.setVisibility(View.INVISIBLE);
-                    t.setText("C O M P U T E R");
-
-                    options.add(selected_opt);
-                    selected_opt = comp_opt.get(rand.nextInt(comp_opt.size()));
-                    options.add(selected_opt);
-                    s_opt(selected_opt);
-                    winner_set.add(winner(options.get(0), options.get(1)));
-                    w1 = Collections.frequency(winner_set, 1);
-                    w2 = Collections.frequency(winner_set, 2);
-                    p1_s.setText(String.valueOf(w1));
-                    p2_s.setText(String.valueOf(w2));
-                    options.clear();
-
-
-
-
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            pl.setVisibility(View.VISIBLE);
-                            t.setText("P L A Y E R");
-                            b1.setVisibility(View.VISIBLE);
-                            b2.setVisibility(View.VISIBLE);
-                            b3.setVisibility(View.VISIBLE);
-
-
-                        }
-                    }, 500);
-
-
-//                b2.setVisibility(View.GONE);
-//                b3.setVisibility(View.GONE);
-                }
+                game(button_clicked[0]);
             }
         });
 
@@ -145,29 +90,8 @@ public class Options extends AppCompatActivity {
             public void onClick(View v) {
 
                 button_clicked[0] += 1;
-                if(button_clicked[0]/2 == rounds)
-                {
-                    final_winner(w1,w2);
-                }
                 selected_opt = b2.getId();
-                options.add(selected_opt);
-                if(button_clicked[0]%2 != 0){
-                    pl.setText(String.valueOf(2));
-                }
-                else
-                {
-                    pl.setText(String.valueOf(1));
-                    winner_set.add(winner(options.get(0), options.get(1)));
-                    w1 = Collections.frequency(winner_set, 1);
-                    w2 = Collections.frequency(winner_set, 2);
-                    p1_s.setText(String.valueOf(w1));
-                    p2_s.setText(String.valueOf(w2));
-                    options.clear();
-
-                }
-//                b1.setVisibility(View.GONE);
-//                b3.setVisibility(View.GONE);
-
+                game(button_clicked[0]);
             }
         });
 
@@ -176,30 +100,8 @@ public class Options extends AppCompatActivity {
             public void onClick(View v) {
 
                 button_clicked[0] += 1;
-                if(button_clicked[0]/2 == rounds)
-                {
-                    final_winner(w1,w2);
-                }
                 selected_opt = b3.getId();
-                options.add(selected_opt);
-                if(button_clicked[0]%2 != 0){
-                    pl.setText(String.valueOf(2));
-                }
-                else
-                {
-                    pl.setText(String.valueOf(1));
-                    winner_set.add(winner(options.get(0), options.get(1)));
-                    w1 = Collections.frequency(winner_set, 1);
-                    w2 = Collections.frequency(winner_set, 2);
-                    p1_s.setText(String.valueOf(w1));
-                    p2_s.setText(String.valueOf(w2));
-                    options.clear();
-
-                }
-//                b1.setVisibility(View.GONE);
-//                b2.setVisibility(View.GONE);
-//
-
+                game(button_clicked[0]);
             }
         });
 
@@ -276,10 +178,10 @@ public class Options extends AppCompatActivity {
                 w.setText("COMPUTER WINS !!");
 
         }
-//        else if(p1_w == p2_w)
-//        {
-//            w.setText("DRAW !!");
-//        }
+        else if(p1_w == p2_w)
+        {
+            w.setText("DRAW !!");
+        }
 
     }
 
@@ -302,6 +204,78 @@ public class Options extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("r_v",r.getVisibility());
+        outState.putInt("p_v",p.getVisibility());
+        outState.putInt("s_v",s.getVisibility());
+        outState.putInt("n_g_v",n_g.getVisibility());
+        outState.putInt("pl_v",pl.getVisibility());
+    }
+
+    public void game(int button_clicked)
+    {
+        if(game_mode == 2) {
+
+            options.add(selected_opt);
+            if (button_clicked % 2 != 0) {
+                pl.setText(String.valueOf(2));
+            } else {
+                pl.setText(String.valueOf(1));
+                winner_set.add(winner(options.get(0), options.get(1)));
+                w1 = Collections.frequency(winner_set, 1);
+                w2 = Collections.frequency(winner_set, 2);
+                p1_s.setText(String.valueOf(w1));
+                p2_s.setText(String.valueOf(w2));
+                options.clear();
+                if(button_clicked/2 == rounds)
+                {
+                    final_winner(w1,w2);
+                }
+            }
+        }
+
+        else if(game_mode == 1) {
+
+            options.add(selected_opt);
+
+            pl.setVisibility(View.INVISIBLE);
+            t.setText("C O M P U T E R");
+
+            selected_opt = comp_opt.get(rand.nextInt(comp_opt.size()));
+            options.add(selected_opt);
+            s_opt(selected_opt);
+
+            winner_set.add(winner(options.get(0), options.get(1)));
+            w1 = Collections.frequency(winner_set, 1);
+            w2 = Collections.frequency(winner_set, 2);
+            p1_s.setText(String.valueOf(w1));
+            p2_s.setText(String.valueOf(w2));
+            options.clear();
 
 
+
+//
+//
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            pl.setVisibility(View.VISIBLE);
+//                            t.setText("P L A Y E R");
+//                            b1.setVisibility(View.VISIBLE);
+//                            b2.setVisibility(View.VISIBLE);
+//                            b3.setVisibility(View.VISIBLE);
+//                        }
+//                    }, 500);
+
+            if(button_clicked == rounds)
+                final_winner(w1,w2);
+
+
+//                b2.setVisibility(View.GONE);
+//                b3.setVisibility(View.GONE);
+        }
+    }
 }
