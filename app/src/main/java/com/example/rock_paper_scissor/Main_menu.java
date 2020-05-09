@@ -1,4 +1,4 @@
-package com.example.rock_papper_scissor;
+package com.example.rock_paper_scissor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,10 +60,8 @@ public class Main_menu extends AppCompatActivity {
 
     public void pass_game_mode(int gm)
     {
-        //Intent i = new Intent(Main_menu.this,Options.class);
         Intent i1 = new Intent(Main_menu.this,Player_Name.class);
         i1.putExtra("game_mode",gm);
-        //i.putExtra("game_mode",gm);
         startActivity(i1);
 
     }

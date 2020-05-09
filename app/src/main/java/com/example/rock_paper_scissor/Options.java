@@ -1,4 +1,4 @@
-package com.example.rock_papper_scissor;
+package com.example.rock_paper_scissor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -158,14 +158,6 @@ public class Options extends AppCompatActivity {
         w.setVisibility(View.VISIBLE);
         n_g.setVisibility(View.VISIBLE);
 
-//        for(int i=0;i<f_w.size();i++)
-//        {
-//            if(winner_set.get(i) == 1)
-//                p1_w++;
-//            else if(winner_set.get(i) == 2)
-//                p2_w++;
-//        }
-
         if(p1_w>p2_w)
         {
             w.setText("PLAYER 1 WINS !!");
@@ -174,7 +166,7 @@ public class Options extends AppCompatActivity {
         {
             if(game_mode == 2)
                 w.setText("PLAYER 2 WINS !!");
-            else if(game_mode == 1)
+            else
                 w.setText("COMPUTER WINS !!");
 
         }
@@ -215,7 +207,7 @@ public class Options extends AppCompatActivity {
         outState.putInt("pl_v",pl.getVisibility());
     }
 
-    public void game(int button_clicked)
+    public void game(final int button_clicked)
     {
         if(game_mode == 2) {
 
@@ -237,7 +229,7 @@ public class Options extends AppCompatActivity {
             }
         }
 
-        else if(game_mode == 1) {
+        else {
 
             options.add(selected_opt);
 
@@ -256,26 +248,21 @@ public class Options extends AppCompatActivity {
             options.clear();
 
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pl.setVisibility(View.VISIBLE);
+                        t.setText("P L A Y E R");
+                        r.setVisibility(View.VISIBLE);
+                        p.setVisibility(View.VISIBLE);
+                        s.setVisibility(View.VISIBLE);
 
-//
-//
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            pl.setVisibility(View.VISIBLE);
-//                            t.setText("P L A Y E R");
-//                            b1.setVisibility(View.VISIBLE);
-//                            b2.setVisibility(View.VISIBLE);
-//                            b3.setVisibility(View.VISIBLE);
-//                        }
-//                    }, 500);
+                        if(button_clicked == rounds)
+                            final_winner(w1,w2);
 
-            if(button_clicked == rounds)
-                final_winner(w1,w2);
+                    }
+                }, 2000);
 
-
-//                b2.setVisibility(View.GONE);
-//                b3.setVisibility(View.GONE);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.rock_papper_scissor;
+package com.example.rock_paper_scissor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

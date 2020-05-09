@@ -9,13 +9,13 @@
 
     <Button
         android:id="@+id/rock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="70dp"
         android:layout_marginTop="190dp"
         android:layout_marginEnd="164dp"
         android:layout_marginBottom="172dp"
-        android:text="ROCK"
+        android:background="@drawable/rock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/paper"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,11 +23,11 @@
 
     <Button
         android:id="@+id/paper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="77dp"
         android:layout_marginBottom="172dp"
-        android:text="Paper"
+        android:background="@drawable/paper"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,11 +35,11 @@
 
     <Button
         android:id="@+id/scissor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="163dp"
         android:layout_marginEnd="70dp"
-        android:text="Scissor"
+        android:background="@drawable/scissor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/paper"
