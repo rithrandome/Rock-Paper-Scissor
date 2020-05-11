@@ -205,6 +205,22 @@ public class Options extends AppCompatActivity {
         outState.putInt("s_v",s.getVisibility());
         outState.putInt("n_g_v",n_g.getVisibility());
         outState.putInt("pl_v",pl.getVisibility());
+        outState.putInt("p1_s",Integer.parseInt(p1_s.getText().toString()));
+        outState.putInt("p2_s",Integer.parseInt(p2_s.getText().toString()));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        r.setVisibility(savedInstanceState.getInt("r_v"));
+        p.setVisibility(savedInstanceState.getInt("p_v"));
+        s.setVisibility(savedInstanceState.getInt("s_v"));
+        n_g.setVisibility(savedInstanceState.getInt("n_g_v"));
+        pl.setVisibility(savedInstanceState.getInt("pl_v"));
+        p1_s.setText(String.valueOf(savedInstanceState.getInt("p1_v")));
+        p2_s.setText(String.valueOf(savedInstanceState.getInt("p2_v")));
+
     }
 
     public void game(final int button_clicked)
@@ -239,6 +255,7 @@ public class Options extends AppCompatActivity {
             selected_opt = comp_opt.get(rand.nextInt(comp_opt.size()));
             options.add(selected_opt);
             s_opt(selected_opt);
+
 
             winner_set.add(winner(options.get(0), options.get(1)));
             w1 = Collections.frequency(winner_set, 1);
