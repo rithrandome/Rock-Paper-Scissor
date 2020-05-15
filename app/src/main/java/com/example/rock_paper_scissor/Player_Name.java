@@ -17,7 +17,7 @@ public class Player_Name extends AppCompatActivity {
     Button b1,b2;
     EditText p1, p2, r;
     TextView t5,t4,t3,t2;
-    int game_mode;
+    int game_mode, flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,8 @@ public class Player_Name extends AppCompatActivity {
             b1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    flag = 1;
 
                     if(TextUtils.isEmpty(p1.getText()) && TextUtils.isEmpty(p2.getText())){
                         p1.setError("Enter 1st Player Name !!");
@@ -69,6 +71,8 @@ public class Player_Name extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    flag = 2;
+
                     if (TextUtils.isEmpty(r.getText())) {
                         r.setError("Enter the number of rounds !!");
                     } else {
@@ -92,6 +96,8 @@ public class Player_Name extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    flag = 1;
+
                     if(TextUtils.isEmpty(p1.getText()))
                     {
                         p1.setError("Enter 1st Player Name !!");
@@ -114,6 +120,8 @@ public class Player_Name extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    flag = 2;
+
                     if (TextUtils.isEmpty(r.getText())) {
                         r.setError("Enter the number of rounds !!");
                     } else {
@@ -135,36 +143,118 @@ public class Player_Name extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("player1",p1.getText().toString());
-        outState.putString("player2",p2.getText().toString());
-        outState.putString("rounds",r.getText().toString());
+//        outState.putString("player1",p1.getText().toString());
+//        outState.putString("player2",p2.getText().toString());
+//        outState.putString("rounds",r.getText().toString());
+//
+//        outState.putInt("v_t3",t3.getVisibility());
+//        outState.putInt("v_t4",t4.getVisibility());
+//        outState.putInt("v_t5",t5.getVisibility());
+//        outState.putInt("v_p1",p1.getVisibility());
+//        outState.putInt("v_p2",p2.getVisibility());
+//        outState.putInt("v_r",r.getVisibility());
+//        outState.putInt("v_b2",b2.getVisibility());
+//        outState.putInt("v_b1",b1.getVisibility());
 
-        outState.putInt("v_t3",t3.getVisibility());
-        outState.putInt("v_t4",t4.getVisibility());
-        outState.putInt("v_t5",t5.getVisibility());
-        outState.putInt("v_p1",p1.getVisibility());
-        outState.putInt("v_p2",p2.getVisibility());
-        outState.putInt("v_r",r.getVisibility());
-        outState.putInt("v_b2",b2.getVisibility());
-        outState.putInt("v_b1",b1.getVisibility());
+        outState.putInt("game_mode",game_mode);
+        outState.putInt("flag",flag);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        p1.setText(savedInstanceState.getString("player1"));
-        p2.setText(savedInstanceState.getString("player2"));
-        r.setText(savedInstanceState.getString("rounds"));
+//        p1.setText(savedInstanceState.getString("player1"));
+//        p2.setText(savedInstanceState.getString("player2"));
+//        r.setText(savedInstanceState.getString("rounds"));
+//
+//        t3.setVisibility(savedInstanceState.getInt("v_t3"));
+//        t4.setVisibility(savedInstanceState.getInt("v_t4"));
+//        t5.setVisibility(savedInstanceState.getInt("v_t5"));
+//        p1.setVisibility(savedInstanceState.getInt("v_p1"));
+//        p2.setVisibility(savedInstanceState.getInt("v_p2"));
+//        r.setVisibility(savedInstanceState.getInt("v_r"));
+//        b2.setVisibility(savedInstanceState.getInt("v_b2"));
+//        b1.setVisibility(savedInstanceState.getInt("v_b1"));
 
-        t3.setVisibility(savedInstanceState.getInt("v_t3"));
-        t4.setVisibility(savedInstanceState.getInt("v_t4"));
-        t5.setVisibility(savedInstanceState.getInt("v_t5"));
-        p1.setVisibility(savedInstanceState.getInt("v_p1"));
-        p2.setVisibility(savedInstanceState.getInt("v_p2"));
-        r.setVisibility(savedInstanceState.getInt("v_r"));
-        b2.setVisibility(savedInstanceState.getInt("v_b2"));
-        b1.setVisibility(savedInstanceState.getInt("v_b1"));
+        game_mode = savedInstanceState.getInt("game_mode");
+        flag = savedInstanceState.getInt("flag");
 
+        if(game_mode == 2)
+        {
+            if(flag == 1) {
+                if (TextUtils.isEmpty(p1.getText()) && TextUtils.isEmpty(p2.getText())) {
+                    p1.setError("Enter 1st Player Name !!");
+                    p2.setError("Enter 2nd Player Name !!");
+                } else if (TextUtils.isEmpty(p2.getText())) {
+                    p2.setError("Enter 2nd Player Name !!");
+                } else if (TextUtils.isEmpty(p1.getText())) {
+                    p1.setError("Enter 1st Player Name !!");
+                } else {
+                    t3.setVisibility(View.GONE);
+                    p1.setVisibility(View.GONE);
+                    t4.setVisibility(View.GONE);
+                    p2.setVisibility(View.GONE);
+                    t5.setVisibility(View.VISIBLE);
+                    r.setVisibility(View.VISIBLE);
+                    b1.setVisibility(View.GONE);
+                    b2.setVisibility(View.VISIBLE);
+                }
+            }
+
+            else if(flag == 2)
+            {
+                if (TextUtils.isEmpty(r.getText())) {
+                    r.setError("Enter the number of rounds !!");
+                } else {
+                    Intent intent1 = new Intent(Player_Name.this, Options.class);
+                    intent1.putExtra("rounds", Integer.parseInt(r.getText().toString()));
+                    intent1.putExtra("player1", p1.getText().toString());
+                    intent1.putExtra("player2", p2.getText().toString());
+                    intent1.putExtra("game_mode", game_mode);
+                    startActivity(intent1);
+                }
+            }
+
+        }
+
+        else
+        {
+            if(flag == 1)
+            {
+                if(TextUtils.isEmpty(p1.getText()) && TextUtils.isEmpty(p2.getText())){
+                    p1.setError("Enter 1st Player Name !!");
+                    p2.setError("Enter 2nd Player Name !!");
+                } else if (TextUtils.isEmpty(p2.getText())) {
+                    p2.setError("Enter 2nd Player Name !!");
+                }
+                else if(TextUtils.isEmpty(p1.getText())){
+                    p1.setError("Enter 1st Player Name !!");
+                }
+                else {
+                    t3.setVisibility(View.GONE);
+                    p1.setVisibility(View.GONE);
+                    t4.setVisibility(View.GONE);
+                    p2.setVisibility(View.GONE);
+                    t5.setVisibility(View.VISIBLE);
+                    r.setVisibility(View.VISIBLE);
+                    b1.setVisibility(View.GONE);
+                    b2.setVisibility(View.VISIBLE);
+                }
+
+            }
+            else if(flag == 2)
+            {
+                if (TextUtils.isEmpty(r.getText())) {
+                    r.setError("Enter the number of rounds !!");
+                } else {
+                    Intent intent = new Intent(Player_Name.this, Options.class);
+                    intent.putExtra("rounds", Integer.parseInt(r.getText().toString()));
+                    intent.putExtra("player1", p1.getText().toString());
+                    intent.putExtra("player2", p2.getText().toString());
+                    startActivity(intent);
+                }
+            }
+        }
     }
 }

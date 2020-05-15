@@ -13,6 +13,7 @@ public class Main_menu extends AppCompatActivity {
 
     Button p,s,d;
 
+    int p_clicked;
     int game_mode;
 
 
@@ -25,9 +26,15 @@ public class Main_menu extends AppCompatActivity {
         s = findViewById(R.id.single_p);
         d = findViewById(R.id.double_p);
 
+        p.setVisibility(View.VISIBLE);
+        s.setVisibility(View.GONE);
+        d.setVisibility(View.GONE);
+
         p.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                p_clicked = 1;
 
                 p.setVisibility(View.GONE);
                 s.setVisibility(View.VISIBLE);
@@ -73,6 +80,7 @@ public class Main_menu extends AppCompatActivity {
         outState.putInt("v_p",p.getVisibility());
         outState.putInt("v_s",s.getVisibility());
         outState.putInt("v_d",d.getVisibility());
+        outState.putInt("p_clicked",p_clicked);
         outState.putInt("game_mode",game_mode);
     }
 
@@ -81,8 +89,23 @@ public class Main_menu extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         game_mode = savedInstanceState.getInt("game_mode");
-        p.setVisibility(savedInstanceState.getInt("v_p"));
-        s.setVisibility(savedInstanceState.getInt("v_s"));
-        d.setVisibility(savedInstanceState.getInt("v_d"));
+//        p.setVisibility(savedInstanceState.getInt("v_p"));
+//        s.setVisibility(savedInstanceState.getInt("v_s"));
+//        d.setVisibility(savedInstanceState.getInt("v_d"));
+
+
+//        if(savedInstanceState.getInt("p_clicked") == 1)
+//        {
+//            p.setVisibility(View.GONE);
+//            s.setVisibility(View.VISIBLE);
+//            d.setVisibility(View.VISIBLE);
+//       }
+//        else
+//        {
+//            p.setVisibility(View.VISIBLE);
+//            s.setVisibility(View.GONE);
+//            d.setVisibility(View.GONE);
+//
+//        }
     }
 }

@@ -11,36 +11,41 @@
         android:id="@+id/rock"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="147dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="280dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="140dp"
         android:background="@drawable/rock"
         app:layout_constraintBottom_toTopOf="@+id/paper"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.481" />
 
     <Button
         android:id="@+id/paper"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="150dp"
         android:layout_marginBottom="37dp"
         android:background="@drawable/paper"
-        app:layout_constraintBottom_toTopOf="@+id/scissor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rock" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496" />
 
     <Button
         android:id="@+id/scissor"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="147dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginEnd="150dp"
         android:layout_marginBottom="190dp"
         android:background="@drawable/scissor"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,14 +53,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paper" />
 
+    <Button
+        android:id="@+id/new_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="500dp"
+        android:background="#FC7331"
+        android:text=" N E W  G A M E"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.498"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="101dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/rock"
+        tools:layout_editor_absoluteY="304dp"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="99dp"
+        android:layout_height="101dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="180dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/scissor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:srcCompat="@drawable/rock"
+        tools:visibility="visible" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="sans-serif"
         android:text="P L A Y E R :"
+        android:textAlignment="center"
         android:textColor="#FF0000"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -74,11 +125,13 @@
         android:textColor="#FF9800"
         android:textSize="36sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="invisible" />
 
     <TextView
         android:id="@+id/player_1"
@@ -153,18 +206,39 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
-    <Button
-        android:id="@+id/new_game"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-        android:text="N E W  G A M E"
+        android:layout_marginTop="260dp"
+        android:layout_marginBottom="520dp"
+        android:text="TextView"
+        android:textColor="#C53F1D"
+        android:textSize="36sp"
         android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#C53F1D"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.579"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
