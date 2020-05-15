@@ -1,8 +1,11 @@
 package com.example.rock_paper_scissor;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +22,8 @@ import java.util.Random;
 public class Options extends AppCompatActivity {
 
     Button r,p,s, n_g, S;
-    ImageView i1, i2;
+    ImageView i1, i2, i3;
+    ConstraintLayout l1;
     TextView p1,p2,w,pl,t,p1_s,p2_s,t6,t2;
     int selected_opt = 0, rounds, game_mode, w1, w2;
     List<Integer> winner_set = new ArrayList<>();
@@ -50,6 +54,8 @@ public class Options extends AppCompatActivity {
         t6 = findViewById(R.id.textView6);
         i1 = findViewById(R.id.imageView);
         i2 = findViewById(R.id.imageView2);
+        l1 = findViewById(R.id.layout_options);
+        i3 = findViewById(R.id.imageView3);
 
         comp_opt.add(r.getId());
         comp_opt.add(p.getId());
@@ -71,6 +77,7 @@ public class Options extends AppCompatActivity {
 
                 Intent i = new Intent(Options.this,Main_menu.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -112,7 +119,6 @@ public class Options extends AppCompatActivity {
                 game(button_clicked[0]);
             }
         });
-
     }
 
     public int winner(int p1,int p2)
@@ -167,14 +173,22 @@ public class Options extends AppCompatActivity {
 
         if(p1_w>p2_w)
         {
-            w.setText(p1.getText().toString().toUpperCase() + " WINS !!");
+            if(game_mode == 2)
+                w.setText(p1.getText().toString().toUpperCase() + " WINS !!");
+            else {
+                l1.setBackgroundResource(R.drawable.win_back);
+                w.setText("YOU WIN !!");
+
+            }
         }
         else if(p1_w<p2_w)
         {
             if(game_mode == 2)
                 w.setText(p2.getText().toString().toUpperCase() + " WINS !!");
-            else
-                w.setText("COMPUTER WINS !!");
+            else {
+                l1.setBackgroundResource(R.drawable.loose_back);
+                w.setText("YOU LOOSE !!");
+            }
 
         }
         else if(p1_w == p2_w)
@@ -182,27 +196,6 @@ public class Options extends AppCompatActivity {
             w.setText("DRAW !!");
         }
 
-    }
-
-    public void s_opt(int s_o)
-    {
-        findViewById(s_o).setEnabled(false);
-
-        if(s_o == r.getId())
-        {
-            p.setVisibility(View.GONE);
-            s.setVisibility(View.GONE);
-        }
-        else if(s_o == p.getId())
-        {
-            r.setVisibility(View.GONE);
-            s.setVisibility(View.GONE);
-        }
-        if(s_o == s.getId())
-        {
-            p.setVisibility(View.GONE);
-            r.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -239,46 +232,51 @@ public class Options extends AppCompatActivity {
 
             options.add(selected_opt);
             if (button_clicked % 2 != 0) {
-                t.setText(p2.getText().toString().toUpperCase() + "'S TURN'");
+                t.setText(p2.getText().toString().toUpperCase() + "'S TURN");
             } else {
-
-                r.setVisibility(View.INVISIBLE);
-                p.setVisibility(View.INVISIBLE);
-                s.setVisibility(View.INVISIBLE);
-                t2.setText(p1.getText().toString().toUpperCase() + "'S CHOICE");
-                t6.setText(p2.getText().toString().toUpperCase() + "'S CHOICE");
-                t2.setVisibility(View.VISIBLE);
-                t6.setVisibility(View.VISIBLE);
-                show_choice(options.get(0),i1);
-                show_choice(options.get(1),i2);
-                i1.setVisibility(View.VISIBLE);
-                i2.setVisibility(View.VISIBLE);
+                if(button_clicked/2 != rounds) {
+                    r.setVisibility(View.INVISIBLE);
+                    p.setVisibility(View.INVISIBLE);
+                    s.setVisibility(View.INVISIBLE);
+                    t2.setText(p1.getText().toString().toUpperCase() + "'S CHOICE");
+                    t6.setText(p2.getText().toString().toUpperCase() + "'S CHOICE");
+                    t2.setVisibility(View.VISIBLE);
+                    t6.setVisibility(View.VISIBLE);
+                    show_choice(options.get(0), i1);
+                    show_choice(options.get(1), i2);
+                    i1.setVisibility(View.VISIBLE);
+                    i2.setVisibility(View.VISIBLE);
+                }
 
                 w = winner(options.get(0), options.get(1));
                 if( w == 1)
                     t.setText(p1.getText().toString().toUpperCase() + " WINS THE ROUND!!");
                 else if( w == 2)
                     t.setText(p2.getText().toString().toUpperCase() + " WINS THE ROUND!!");
+                else
+                    t.setText("ROUND DRAW !!");
                 winner_set.add(w);
                 w1 = Collections.frequency(winner_set, 1);
                 w2 = Collections.frequency(winner_set, 2);
                 p1_s.setText(String.valueOf(w1));
                 p2_s.setText(String.valueOf(w2));
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
-                        t.setVisibility(View.VISIBLE);
-                        r.setVisibility(View.VISIBLE);
-                        p.setVisibility(View.VISIBLE);
-                        s.setVisibility(View.VISIBLE);
-                        t2.setVisibility(View.INVISIBLE);
-                        t6.setVisibility(View.INVISIBLE);
-                        i1.setVisibility(View.INVISIBLE);
-                        i2.setVisibility(View.INVISIBLE);
-                    }
-                }, 2000);
+                if(button_clicked/2 != rounds) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
+                            t.setVisibility(View.VISIBLE);
+                            r.setVisibility(View.VISIBLE);
+                            p.setVisibility(View.VISIBLE);
+                            s.setVisibility(View.VISIBLE);
+                            t2.setVisibility(View.INVISIBLE);
+                            t6.setVisibility(View.INVISIBLE);
+                            i1.setVisibility(View.INVISIBLE);
+                            i2.setVisibility(View.INVISIBLE);
+                        }
+                    }, 4000);
+                }
 
 
                 options.clear();
@@ -296,9 +294,14 @@ public class Options extends AppCompatActivity {
             pl.setVisibility(View.INVISIBLE);
             t.setText("Computer's turn");
 
+            r.setVisibility(View.INVISIBLE);
+            p.setVisibility(View.INVISIBLE);
+            s.setVisibility(View.INVISIBLE);
+
             selected_opt = comp_opt.get(rand.nextInt(comp_opt.size()));
             options.add(selected_opt);
-            s_opt(selected_opt);
+            show_choice(selected_opt,i3);
+            i3.setVisibility(View.VISIBLE);
 
 
             winner_set.add(winner(options.get(0), options.get(1)));
@@ -312,7 +315,7 @@ public class Options extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        findViewById(selected_opt).setEnabled(true);
+                        i3.setVisibility(View.GONE);
                         t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
                         r.setVisibility(View.VISIBLE);
                         p.setVisibility(View.VISIBLE);
@@ -341,5 +344,28 @@ public class Options extends AppCompatActivity {
         {
             i.setImageResource(R.drawable.scissor);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("QUIT?");
+        builder.setMessage("Do you want to go to Main menu?");
+        builder.setPositiveButton("Menu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                Intent intent = new Intent(Options.this,Main_menu.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Resume", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
