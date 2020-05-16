@@ -312,20 +312,20 @@ public class Options extends AppCompatActivity {
             options.clear();
 
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        i3.setVisibility(View.GONE);
-                        t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
-                        r.setVisibility(View.VISIBLE);
-                        p.setVisibility(View.VISIBLE);
-                        s.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    i3.setVisibility(View.GONE);
+                    t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
+                    r.setVisibility(View.VISIBLE);
+                    p.setVisibility(View.VISIBLE);
+                    s.setVisibility(View.VISIBLE);
 
-                        if(button_clicked == rounds)
-                            final_winner(w1,w2);
+                    if(button_clicked == rounds)
+                        final_winner(w1,w2);
 
-                    }
-                }, 2000);
+                }
+            }, 2000);
 
         }
     }
@@ -348,10 +348,10 @@ public class Options extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.MyDialogBoxTheme);
         builder.setTitle("QUIT?");
         builder.setMessage("Do you want to go to Main menu?");
-        builder.setPositiveButton("Menu", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Back", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();

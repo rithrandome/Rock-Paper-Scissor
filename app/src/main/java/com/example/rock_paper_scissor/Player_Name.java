@@ -1,8 +1,10 @@
 package com.example.rock_paper_scissor;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -133,19 +135,6 @@ public class Player_Name extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState);
 
-//        outState.putString("player1",p1.getText().toString());
-//        outState.putString("player2",p2.getText().toString());
-//        outState.putString("rounds",r.getText().toString());
-//
-//        outState.putInt("v_t3",t3.getVisibility());
-//        outState.putInt("v_t4",t4.getVisibility());
-//        outState.putInt("v_t5",t5.getVisibility());
-//        outState.putInt("v_p1",p1.getVisibility());
-//        outState.putInt("v_p2",p2.getVisibility());
-//        outState.putInt("v_r",r.getVisibility());
-//        outState.putInt("v_b2",b2.getVisibility());
-//        outState.putInt("v_b1",b1.getVisibility());
-
         outState.putInt("game_mode",game_mode);
         outState.putInt("flag",flag);
     }
@@ -154,18 +143,6 @@ public class Player_Name extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-//        p1.setText(savedInstanceState.getString("player1"));
-//        p2.setText(savedInstanceState.getString("player2"));
-//        r.setText(savedInstanceState.getString("rounds"));
-//
-//        t3.setVisibility(savedInstanceState.getInt("v_t3"));
-//        t4.setVisibility(savedInstanceState.getInt("v_t4"));
-//        t5.setVisibility(savedInstanceState.getInt("v_t5"));
-//        p1.setVisibility(savedInstanceState.getInt("v_p1"));
-//        p2.setVisibility(savedInstanceState.getInt("v_p2"));
-//        r.setVisibility(savedInstanceState.getInt("v_r"));
-//        b2.setVisibility(savedInstanceState.getInt("v_b2"));
-//        b1.setVisibility(savedInstanceState.getInt("v_b1"));
 
         game_mode = savedInstanceState.getInt("game_mode");
         flag = savedInstanceState.getInt("flag");
@@ -253,5 +230,28 @@ public class Player_Name extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.MyDialogBoxTheme);
+        builder.setTitle("QUIT?");
+        builder.setMessage("Do you want to go to Main menu?");
+        builder.setPositiveButton("Menu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                Intent intent = new Intent(Player_Name.this,Main_menu.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Resume", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

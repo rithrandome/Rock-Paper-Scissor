@@ -14,9 +14,6 @@ import android.widget.Toast;
 public class Main_menu extends AppCompatActivity {
 
     Button p,s,d;
-
-    private long doubleBackToExitPressed;
-    private Toast backToast;
     int flag;
     int game_mode;
 
@@ -141,20 +138,23 @@ public class Main_menu extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (doubleBackToExitPressed + 2000 > System.currentTimeMillis() ) {
-//            backToast.cancel();
-//            super.onBackPressed();
-//            System.exit(0);
-//        }
-//        else {
-//
-//            doubleBackToExitPressed = System.currentTimeMillis();
-//            backToast = Toast.makeText(this, "Please click Back again to exit", Toast.LENGTH_SHORT);
-//            backToast.show();
-//        }
-//
-//
-//    }
+    private long doubleBackToExitPressed;
+    private Toast backToast;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressed + 2000 > System.currentTimeMillis() ) {
+            backToast.cancel();
+            super.onBackPressed();
+            System.exit(0);
+        }
+        else {
+
+            doubleBackToExitPressed = System.currentTimeMillis();
+            backToast = Toast.makeText(this, "Please click Back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+
+
+    }
 }
