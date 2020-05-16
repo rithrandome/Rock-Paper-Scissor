@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.PersistableBundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class Options extends AppCompatActivity {
@@ -26,12 +28,20 @@ public class Options extends AppCompatActivity {
     ImageView i1, i2, i3;
     ConstraintLayout l1;
     TextView p1,p2,w,pl,t,p1_s,p2_s,t6,t2;
+    CountDownTimer countDownTimer;
     int selected_opt = 0, rounds, game_mode, w1, w2, flag = 0;
     List<Integer> winner_set = new ArrayList<>();
     List<Integer> options = new ArrayList<>();
     List<Integer> comp_opt = new ArrayList<>();
     Random rand = new Random();
     final int[] button_clicked = new int[1];
+
+    private static long delay = 0;
+    private boolean timerRunning;
+    private long timeLeftInMillis;
+
+
+    private long endTime;
 
 
     @Override
@@ -75,8 +85,6 @@ public class Options extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                flag = 1;
-
                 button_clicked[0] += 1;
                 selected_opt = r.getId();
                 game(button_clicked[0]);
@@ -87,8 +95,6 @@ public class Options extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                flag = 2;
-
                 button_clicked[0] += 1;
                 selected_opt = p.getId();
                 game(button_clicked[0]);
@@ -98,8 +104,6 @@ public class Options extends AppCompatActivity {
         s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                flag = 3;
 
                 button_clicked[0] += 1;
                 selected_opt = s.getId();
@@ -224,6 +228,11 @@ public class Options extends AppCompatActivity {
         outState.putInt("t2_v",t2.getVisibility());
         outState.putInt("t6_v",t6.getVisibility());
         outState.putInt("n_g_v",n_g.getVisibility());
+        outState.putInt("selected_opt",selected_opt);
+        outState.putLong("millisLeft",timeLeftInMillis);
+        outState.putBoolean("timerRunning",timerRunning);
+        outState.putLong("endTime",endTime);
+        outState.putLong("delay",delay);
 
 
     }
@@ -234,6 +243,7 @@ public class Options extends AppCompatActivity {
 
         game_mode = savedInstanceState.getInt("game_mode");
         w1 = savedInstanceState.getInt("player1_score");
+        delay = savedInstanceState.getLong("delay");
         t.setText(savedInstanceState.getString("t_text"));
         p1_s.setText(savedInstanceState.getString("p1_s_text"));
         p2_s.setText(savedInstanceState.getString("p2_s_text"));
@@ -255,7 +265,18 @@ public class Options extends AppCompatActivity {
         winner_set.addAll(savedInstanceState.getIntegerArrayList("winner_set"));
         comp_opt.addAll(savedInstanceState.getIntegerArrayList("comp_opt"));
         flag = savedInstanceState.getInt("flag");
+        selected_opt = savedInstanceState.getInt("selected_opt");
+        timeLeftInMillis = savedInstanceState.getLong("millieLeft");
+        timerRunning = savedInstanceState.getBoolean("timeRunning");
 
+        if (timerRunning) {
+            endTime = savedInstanceState.getLong("endTime");
+            timeLeftInMillis = endTime - System.currentTimeMillis();
+            if(flag == 2)
+                startTimer(button_clicked[0],flag);
+            else if(flag == 1)
+                startTimer(button_clicked[0],flag);
+        }
     }
 
     public void game(final int button_clicked)
@@ -267,7 +288,7 @@ public class Options extends AppCompatActivity {
             if (button_clicked % 2 != 0) {
                 t.setText(p2.getText().toString().toUpperCase() + "'S TURN");
             } else {
-                if(button_clicked/2 != rounds) {
+                if(button_clicked/2 <= rounds) {
                     r.setVisibility(View.INVISIBLE);
                     p.setVisibility(View.INVISIBLE);
                     s.setVisibility(View.INVISIBLE);
@@ -294,29 +315,15 @@ public class Options extends AppCompatActivity {
                 p1_s.setText(String.valueOf(w1));
                 p2_s.setText(String.valueOf(w2));
 
-                if(button_clicked/2 != rounds) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
-                            t.setVisibility(View.VISIBLE);
-                            r.setVisibility(View.VISIBLE);
-                            p.setVisibility(View.VISIBLE);
-                            s.setVisibility(View.VISIBLE);
-                            t2.setVisibility(View.INVISIBLE);
-                            t6.setVisibility(View.INVISIBLE);
-                            i1.setVisibility(View.INVISIBLE);
-                            i2.setVisibility(View.INVISIBLE);
-                        }
-                    }, 4000);
-                }
+                if(button_clicked/2 <= rounds) {
 
+                    delay = 4000;
+                    flag = 1;
+                    startTimer(button_clicked,flag);
+                }
 
                 options.clear();
-                if(button_clicked/2 == rounds)
-                {
-                    final_winner(w1,w2);
-                }
+
             }
         }
 
@@ -344,24 +351,63 @@ public class Options extends AppCompatActivity {
             p2_s.setText(String.valueOf(w2));
             options.clear();
 
+            delay = 2000;
+            flag = 2;
+            startTimer(button_clicked,flag);
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+
+
+        }
+    }
+
+    private void startTimer(final int button_clicked, final int flag) {
+
+        timeLeftInMillis = delay;
+
+        endTime = System.currentTimeMillis() + timeLeftInMillis;
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+            }
+
+
+            @Override
+            public void onFinish() {
+                timerRunning = false;
+
+                if(flag == 2) {
                     i3.setVisibility(View.GONE);
                     t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
                     r.setVisibility(View.VISIBLE);
                     p.setVisibility(View.VISIBLE);
                     s.setVisibility(View.VISIBLE);
 
-                    if(button_clicked == rounds)
-                        final_winner(w1,w2);
-
+                    if (button_clicked == rounds)
+                        final_winner(w1, w2);
                 }
-            }, 2000);
+                else if(flag == 1){
+                    t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
+                    t.setVisibility(View.VISIBLE);
+                    r.setVisibility(View.VISIBLE);
+                    p.setVisibility(View.VISIBLE);
+                    s.setVisibility(View.VISIBLE);
+                    t2.setVisibility(View.INVISIBLE);
+                    t6.setVisibility(View.INVISIBLE);
+                    i1.setVisibility(View.INVISIBLE);
+                    i2.setVisibility(View.INVISIBLE);
+                    if(button_clicked/2 == rounds)
+                    {
+                        final_winner(w1,w2);
+                    }
+                }
 
-        }
+            }
+        }.start();
+
+        timerRunning = true;
     }
+
 
     public void show_choice(int id, ImageView i)
     {
