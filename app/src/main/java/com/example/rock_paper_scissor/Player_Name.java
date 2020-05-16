@@ -1,13 +1,11 @@
 package com.example.rock_paper_scissor;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +47,7 @@ public class Player_Name extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (game_mode == 2) {
-
+                    flag = 1;
                     if (TextUtils.isEmpty(p1.getText()) && TextUtils.isEmpty(p2.getText())) {
                         p1.setError("Enter 1st Player Name !!");
                         p2.setError("Enter 2nd Player Name !!");
@@ -132,7 +130,7 @@ public class Player_Name extends AppCompatActivity {
 
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putInt("game_mode",game_mode);
@@ -140,95 +138,94 @@ public class Player_Name extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
 
         game_mode = savedInstanceState.getInt("game_mode");
         flag = savedInstanceState.getInt("flag");
 
-        if(flag == 0)
+        if (flag == 1)
         {
+            if( game_mode == 2) {
+                if (TextUtils.isEmpty(p1.getText()) && TextUtils.isEmpty(p2.getText())) {
+                    p1.setError("Enter 1st Player Name !!");
+                    p2.setError("Enter 2nd Player Name !!");
+                } else if (TextUtils.isEmpty(p2.getText())) {
+                    p2.setError("Enter 2nd Player Name !!");
+                } else if (TextUtils.isEmpty(p1.getText())) {
+                    p1.setError("Enter 1st Player Name !!");
+                } else {
+                    t3.setVisibility(View.GONE);
+                    p1.setVisibility(View.GONE);
+                    t4.setVisibility(View.GONE);
+                    p2.setVisibility(View.GONE);
+                    t5.setVisibility(View.VISIBLE);
+                    r.setVisibility(View.VISIBLE);
+                    b1.setVisibility(View.GONE);
+                    b2.setVisibility(View.VISIBLE);
 
-        }
+                    b2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-        else if(flag == 1)
-        {
-            if (TextUtils.isEmpty(p1.getText()) && TextUtils.isEmpty(p2.getText())) {
-                p1.setError("Enter 1st Player Name !!");
-                p2.setError("Enter 2nd Player Name !!");
-            } else if (TextUtils.isEmpty(p2.getText())) {
-                p2.setError("Enter 2nd Player Name !!");
-            } else if (TextUtils.isEmpty(p1.getText())) {
-                p1.setError("Enter 1st Player Name !!");
-            } else {
-                t3.setVisibility(View.GONE);
-                p1.setVisibility(View.GONE);
-                t4.setVisibility(View.GONE);
-                p2.setVisibility(View.GONE);
-                t5.setVisibility(View.VISIBLE);
-                r.setVisibility(View.VISIBLE);
-                b1.setVisibility(View.GONE);
-                b2.setVisibility(View.VISIBLE);
+                            flag = 2;
 
-                b2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        flag = 2;
-
-                        if (TextUtils.isEmpty(r.getText())) {
-                            r.setError("Enter the number of rounds !!");
-                        } else {
-                            Intent intent = new Intent(Player_Name.this, Options.class);
-                            intent.putExtra("rounds", Integer.parseInt(r.getText().toString()));
-                            intent.putExtra("player1", p1.getText().toString());
-                            intent.putExtra("player2", p2.getText().toString());
-                            intent.putExtra("game_mode",game_mode);
-                            startActivity(intent);
-                            finish();
+                            if (TextUtils.isEmpty(r.getText())) {
+                                r.setError("Enter the number of rounds !!");
+                            } else {
+                                Intent intent = new Intent(Player_Name.this, Options.class);
+                                intent.putExtra("rounds", Integer.parseInt(r.getText().toString()));
+                                intent.putExtra("player1", p1.getText().toString());
+                                intent.putExtra("player2", p2.getText().toString());
+                                intent.putExtra("game_mode", game_mode);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
-                    }
-                });
+                    });
 
+                }
             }
-        } else if (game_mode == 1) {
-            flag = 1;
+            else if(game_mode == 1)
+            {
 
-            if (TextUtils.isEmpty(p1.getText())) {
-                p1.setError("Enter 1st Player Name !!");
-            } else {
-                t3.setVisibility(View.GONE);
-                p1.setVisibility(View.GONE);
-                t4.setVisibility(View.GONE);
-                t5.setVisibility(View.VISIBLE);
-                r.setVisibility(View.VISIBLE);
-                b1.setVisibility(View.GONE);
-                b2.setVisibility(View.VISIBLE);
-                t2.setVisibility(View.GONE);
+                if (TextUtils.isEmpty(p1.getText())) {
+                    p1.setError("Enter 1st Player Name !!");
+                } else {
+                    t3.setVisibility(View.GONE);
+                    p1.setVisibility(View.GONE);
+                    t4.setVisibility(View.GONE);
+                    t5.setVisibility(View.VISIBLE);
+                    r.setVisibility(View.VISIBLE);
+                    b1.setVisibility(View.GONE);
+                    b2.setVisibility(View.VISIBLE);
+                    t2.setVisibility(View.GONE);
 
-                b2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    b2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        flag = 2;
+                            flag = 2;
 
-                        if (TextUtils.isEmpty(r.getText())) {
-                            r.setError("Enter the number of rounds !!");
-                        } else {
-                            Intent intent = new Intent(Player_Name.this, Options.class);
-                            intent.putExtra("rounds", Integer.parseInt(r.getText().toString()));
-                            intent.putExtra("player1", p1.getText().toString());
-                            intent.putExtra("player2", p2.getText().toString());
-                            intent.putExtra("game_mode",game_mode);
-                            startActivity(intent);
-                            finish();
+                            if (TextUtils.isEmpty(r.getText())) {
+                                r.setError("Enter the number of rounds !!");
+                            } else {
+                                Intent intent = new Intent(Player_Name.this, Options.class);
+                                intent.putExtra("rounds", Integer.parseInt(r.getText().toString()));
+                                intent.putExtra("player1", p1.getText().toString());
+                                intent.putExtra("player2", p2.getText().toString());
+                                intent.putExtra("game_mode",game_mode);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
-                    }
-                });
+                    });
 
+                }
             }
         }
+
 
     }
 

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,12 +26,12 @@ public class Options extends AppCompatActivity {
     ImageView i1, i2, i3;
     ConstraintLayout l1;
     TextView p1,p2,w,pl,t,p1_s,p2_s,t6,t2;
-    int selected_opt = 0, rounds, game_mode, w1, w2;
+    int selected_opt = 0, rounds, game_mode, w1, w2, flag = 0;
     List<Integer> winner_set = new ArrayList<>();
     List<Integer> options = new ArrayList<>();
     List<Integer> comp_opt = new ArrayList<>();
     Random rand = new Random();
-
+    final int[] button_clicked = new int[1];
 
 
     @Override
@@ -69,7 +70,42 @@ public class Options extends AppCompatActivity {
 
         t.setText(p1.getText().toString().toUpperCase() + "'S TURN");
 
-        selected_option(r,p,s);
+        button_clicked[0] = 0;
+        r.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                flag = 1;
+
+                button_clicked[0] += 1;
+                selected_opt = r.getId();
+                game(button_clicked[0]);
+            }
+        });
+
+        p.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                flag = 2;
+
+                button_clicked[0] += 1;
+                selected_opt = p.getId();
+                game(button_clicked[0]);
+            }
+        });
+
+        s.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                flag = 3;
+
+                button_clicked[0] += 1;
+                selected_opt = s.getId();
+                game(button_clicked[0]);
+            }
+        });
 
         n_g.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,45 +117,8 @@ public class Options extends AppCompatActivity {
             }
         });
 
-
-
     }
 
-
-
-    public void selected_option(final Button b1, final Button b2, final Button b3)
-    {
-        final int[] button_clicked = new int[1];
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                button_clicked[0] += 1;
-                selected_opt = b1.getId();
-                game(button_clicked[0]);
-            }
-        });
-
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                button_clicked[0] += 1;
-                selected_opt = b2.getId();
-                game(button_clicked[0]);
-            }
-        });
-
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                button_clicked[0] += 1;
-                selected_opt = b3.getId();
-                game(button_clicked[0]);
-            }
-        });
-    }
 
     public int winner(int p1,int p2)
     {
@@ -199,35 +198,88 @@ public class Options extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        outState.putInt("game_mode",game_mode);
+        outState.putString("p1_s_text",p1_s.getText().toString());
+        outState.putString("p2_s_text",p2_s.getText().toString());
+        outState.putString("w_text",w.getText().toString());
+        outState.putString("t_text",t.getText().toString());
+        outState.putInt("player1_score",w1);
+        outState.putInt("player2_score",w2);
+        outState.putInt("flag",flag);
+        outState.putInt("button_clicked",button_clicked[0]);
+        outState.putIntegerArrayList("options", (ArrayList<Integer>) options);
+        outState.putIntegerArrayList("winner_set", (ArrayList<Integer>) winner_set);
+        outState.putIntegerArrayList("comp_opt", (ArrayList<Integer>) comp_opt);
         outState.putInt("r_v",r.getVisibility());
         outState.putInt("p_v",p.getVisibility());
         outState.putInt("s_v",s.getVisibility());
+        outState.putInt("t_v",t.getVisibility());
+        outState.putInt("w_v",w.getVisibility());
+        outState.putInt("i1_v",i1.getVisibility());
+        outState.putInt("i2_v",i2.getVisibility());
+        outState.putInt("i3_v",i3.getVisibility());
+        outState.putInt("t2_v",t2.getVisibility());
+        outState.putInt("t6_v",t6.getVisibility());
         outState.putInt("n_g_v",n_g.getVisibility());
-        outState.putInt("pl_v",pl.getVisibility());
-        outState.putInt("p1_s",Integer.parseInt(p1_s.getText().toString()));
-        outState.putInt("p2_s",Integer.parseInt(p2_s.getText().toString()));
+
+
     }
 
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
+        game_mode = savedInstanceState.getInt("game_mode");
+        w1 = savedInstanceState.getInt("player1_score");
+        t.setText(savedInstanceState.getString("t_text"));
+        p1_s.setText(savedInstanceState.getString("p1_s_text"));
+        p2_s.setText(savedInstanceState.getString("p2_s_text"));
+        w.setText(savedInstanceState.getString("w_text"));
         r.setVisibility(savedInstanceState.getInt("r_v"));
         p.setVisibility(savedInstanceState.getInt("p_v"));
         s.setVisibility(savedInstanceState.getInt("s_v"));
+        t.setVisibility(savedInstanceState.getInt("t_v"));
+        w.setVisibility(savedInstanceState.getInt("w_v"));
+        i1.setVisibility(savedInstanceState.getInt("i1_v"));
+        i2.setVisibility(savedInstanceState.getInt("i2_v"));
+        i3.setVisibility(savedInstanceState.getInt("i3_v"));
         n_g.setVisibility(savedInstanceState.getInt("n_g_v"));
-        pl.setVisibility(savedInstanceState.getInt("pl_v"));
-        p1_s.setText(String.valueOf(savedInstanceState.getInt("p1_v")));
-        p2_s.setText(String.valueOf(savedInstanceState.getInt("p2_v")));
+        t2.setVisibility(savedInstanceState.getInt("t2_v"));
+        t6.setVisibility(savedInstanceState.getInt("t6_v"));
+        w2 = savedInstanceState.getInt("player2_score");
+        button_clicked[0] = savedInstanceState.getInt("button_clicked");
+        options.addAll(savedInstanceState.getIntegerArrayList("options"));
+        winner_set.addAll(savedInstanceState.getIntegerArrayList("winner_set"));
+        comp_opt.addAll(savedInstanceState.getIntegerArrayList("comp_opt"));
+        flag = savedInstanceState.getInt("flag");
+
+//        if( flag == 1)
+//        {
+//            button_clicked[0] += 1;
+//            selected_opt = r.getId();
+//            game(button_clicked[0]);
+//        }
+//        else if( flag == 2)
+//        {
+//            button_clicked[0] += 1;
+//            selected_opt = p.getId();
+//            game(button_clicked[0]);
+//        }
+//        else if( flag == 3)
+//        {
+//            button_clicked[0] += 1;
+//            selected_opt = s.getId();
+//            game(button_clicked[0]);
+//        }
 
     }
 
     public void game(final int button_clicked)
     {
-        int w;
+        int win;
         if(game_mode == 2) {
 
             options.add(selected_opt);
@@ -248,14 +300,14 @@ public class Options extends AppCompatActivity {
                     i2.setVisibility(View.VISIBLE);
                 }
 
-                w = winner(options.get(0), options.get(1));
-                if( w == 1)
+                win = winner(options.get(0), options.get(1));
+                if( win == 1)
                     t.setText(p1.getText().toString().toUpperCase() + " WINS THE ROUND!!");
-                else if( w == 2)
+                else if( win == 2)
                     t.setText(p2.getText().toString().toUpperCase() + " WINS THE ROUND!!");
                 else
                     t.setText("ROUND DRAW !!");
-                winner_set.add(w);
+                winner_set.add(win);
                 w1 = Collections.frequency(winner_set, 1);
                 w2 = Collections.frequency(winner_set, 2);
                 p1_s.setText(String.valueOf(w1));

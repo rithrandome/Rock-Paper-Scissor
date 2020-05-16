@@ -68,25 +68,25 @@ public class Main_menu extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("v_p",p.getVisibility());
-        outState.putInt("v_s",s.getVisibility());
-        outState.putInt("v_d",d.getVisibility());
+//        outState.putInt("v_p",p.getVisibility());
+//        outState.putInt("v_s",s.getVisibility());
+//        outState.putInt("v_d",d.getVisibility());
         outState.putInt("flag",flag);
         outState.putInt("game_mode",game_mode);
     }
 
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
         game_mode = savedInstanceState.getInt("game_mode");
         flag = savedInstanceState.getInt("flag");
-        p.setVisibility(savedInstanceState.getInt("v_p"));
-        s.setVisibility(savedInstanceState.getInt("v_s"));
-        d.setVisibility(savedInstanceState.getInt("v_d"));
+//        p.setVisibility(savedInstanceState.getInt("v_p"));
+//        s.setVisibility(savedInstanceState.getInt("v_s"));
+//        d.setVisibility(savedInstanceState.getInt("v_d"));
 
         if(flag == 1)
         {
