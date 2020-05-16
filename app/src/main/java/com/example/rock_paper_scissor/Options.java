@@ -256,25 +256,6 @@ public class Options extends AppCompatActivity {
         comp_opt.addAll(savedInstanceState.getIntegerArrayList("comp_opt"));
         flag = savedInstanceState.getInt("flag");
 
-//        if( flag == 1)
-//        {
-//            button_clicked[0] += 1;
-//            selected_opt = r.getId();
-//            game(button_clicked[0]);
-//        }
-//        else if( flag == 2)
-//        {
-//            button_clicked[0] += 1;
-//            selected_opt = p.getId();
-//            game(button_clicked[0]);
-//        }
-//        else if( flag == 3)
-//        {
-//            button_clicked[0] += 1;
-//            selected_opt = s.getId();
-//            game(button_clicked[0]);
-//        }
-
     }
 
     public void game(final int button_clicked)
