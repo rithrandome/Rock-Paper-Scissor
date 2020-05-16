@@ -233,7 +233,8 @@ public class Options extends AppCompatActivity {
         outState.putBoolean("timerRunning",timerRunning);
         outState.putLong("endTime",endTime);
         outState.putLong("delay",delay);
-
+        outState.putString("t2_text",t2.getText().toString());
+        outState.putString("t6_text",t6.getText().toString());
 
     }
 
@@ -247,6 +248,8 @@ public class Options extends AppCompatActivity {
         t.setText(savedInstanceState.getString("t_text"));
         p1_s.setText(savedInstanceState.getString("p1_s_text"));
         p2_s.setText(savedInstanceState.getString("p2_s_text"));
+        t2.setText(savedInstanceState.getString("t2_text"));
+        t6.setText(savedInstanceState.getString("t6_text"));
         w.setText(savedInstanceState.getString("w_text"));
         r.setVisibility(savedInstanceState.getInt("r_v"));
         p.setVisibility(savedInstanceState.getInt("p_v"));
