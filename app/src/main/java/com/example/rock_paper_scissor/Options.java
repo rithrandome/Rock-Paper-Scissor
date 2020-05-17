@@ -244,7 +244,6 @@ public class Options extends AppCompatActivity {
 
         game_mode = savedInstanceState.getInt("game_mode");
         w1 = savedInstanceState.getInt("player1_score");
-        delay = savedInstanceState.getLong("delay");
         t.setText(savedInstanceState.getString("t_text"));
         p1_s.setText(savedInstanceState.getString("p1_s_text"));
         p2_s.setText(savedInstanceState.getString("p2_s_text"));
@@ -271,6 +270,7 @@ public class Options extends AppCompatActivity {
         selected_opt = savedInstanceState.getInt("selected_opt");
         timeLeftInMillis = savedInstanceState.getLong("millieLeft");
         timerRunning = savedInstanceState.getBoolean("timeRunning");
+        delay = savedInstanceState.getLong("delay");
 
         if (timerRunning) {
             endTime = savedInstanceState.getLong("endTime");
