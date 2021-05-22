@@ -9,9 +9,17 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.rock_paper_scissor.Player_Name"></activity>
-        <activity android:name="com.example.rock_paper_scissor.Options" />
-        <activity android:name="com.example.rock_paper_scissor.Main_menu">
+        <activity android:name="com.example.rock_paper_scissor.Player_Name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity android:name="com.example.rock_paper_scissor.Options"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity android:name="com.example.rock_paper_scissor.Main_menu"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
